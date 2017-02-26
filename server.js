@@ -11,7 +11,7 @@ var articles = {
 		heading: 'Article-one',
 		date: 'Feb 26,2017',
 		content: `
-			<p>This is the content of the first article.This is the content of the first article.This is the content of the first article.This is the content of the first article.</p>
+			    <p>This is the content of the first article.This is the content of the first article.This is the content of the first article.This is the content of the first article.</p>
 		        <p>This is the content of the first article.This is the content of the first article.This is the content of the first article.This is the content of the first article.</p>
 		        <p>This is the content of the first article.This is the content of the first article.This is the content of the first article.This is the content of the first article.</p>`
 	},
