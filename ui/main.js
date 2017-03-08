@@ -1,4 +1,4 @@
-console.log('Loaded!');
+/*console.log('Loaded!');
 var element = document.getElementById("main_txt");
 element.innerHTML = 'Sourab Mangrulkar';
 var para = document.getElementById("para");
@@ -12,5 +12,20 @@ function moveRight() {
 }
 img.onclick = function() {
     var interval = setInterval(moveRight , 50);
+}*/
+
+
+//couonter logic
+var button = document.getElementById("counter");
+button.onClick = function(){
+    //Make a request to counter endpoint
+    
+    //Capture the response and store it in a variable
+    
+    //Render the variable in correct span
+    var counter=0;
+    var span= document.getElementById("count");
+    counter=counter+1;
+    span.innerHTML = counter.toString();
 }
 
