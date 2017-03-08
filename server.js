@@ -70,6 +70,16 @@ app.get('/counter', function(req,res) {
     res.send(counter.toString());
 });
 
+var names = [];
+app.get('/submit-name', function(req,res) { //?name=xxxx
+    //get the name from the request
+    var name = req.query.name;
+    
+    names.push(name);
+    //JSON: JavaScript ObjectNotation
+    res.send(JSON.stringify(names)); //response to the web browser
+});
+
 app.get('/:articleName', function (req, res) {
   //articleName == article-one
   //srticles[articleName] == {} contents object for article-one
