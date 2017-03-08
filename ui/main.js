@@ -16,6 +16,7 @@ img.onclick = function() {
 
 
 //couonter logic
+ var counter=0;
 var button = document.getElementById("counter");
 button.onClick = function(){
     //Make a request to counter endpoint
@@ -23,7 +24,7 @@ button.onClick = function(){
     //Capture the response and store it in a variable
     
     //Render the variable in correct span
-    var counter=0;
+   
     var span= document.getElementById("count");
     counter=counter+1;
     span.innerHTML = counter.toString();
