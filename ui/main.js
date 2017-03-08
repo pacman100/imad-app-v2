@@ -46,7 +46,7 @@ button.onclick = function(){
 
 //comment code
 //submit name
-var submit = dcument.getElementById('submit');
+var submit = document.getElementById('submit');
 submit.onclick = function() {
     
     //create a request object
