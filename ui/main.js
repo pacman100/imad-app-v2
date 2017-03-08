@@ -41,6 +41,5 @@ button.onclick = function(){
     //Make a request to counter endpoint
     request.open('GET', 'http://pacman100.imad.hasura-app.io/counter', true);
     request.send(null);
-    
 };
 
