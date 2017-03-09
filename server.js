@@ -105,12 +105,28 @@ app.get('/submit-name', function(req,res) { //  /submit-name?name=xxxx
     res.send(JSON.stringify(names)); //response to the web browser
 });
 
-app.get('/:articleName', function (req, res) {
+app.get('/articles/:articleName', function (req, res) {
   //articleName == article-one
-  //srticles[articleName] == {} contents object for article-one
-  var articleName = req.params.articleName;  
-  res.send(createTemplate(articles[articleName]));
-});
+  //articles[articleName] == {} contents object for article-one
+  /*var articleName = req.params.articleName;  
+  res.send(createTemplate(articles[articleName]));*/
+  
+  pool.query("SELECT * FROM articles WHERE title = '" + req.params.articleName + "'" , function(err,result){
+      if(err) {
+          res.status(500).send(err.toString());
+      }
+      else if(result.rows.length === 0) {
+          res.status(404).send('Article not found');
+      }
+      else
+      {
+          var articleData = result.rows[0];
+           res.send(createTemplate(articleData));
+      }
+  });
+  
+ });
+
 
 /*app.get('/article-two', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'article-two.html'));
