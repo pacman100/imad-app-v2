@@ -8,7 +8,7 @@ var config = {
     database : 'pacman100',
     host : 'db.imad.hasura-app.io',
     port : '5432',
-    password : process.env.DB_PASSWORD
+    password : 'db-pacman100-48236'//process.env.DB_PASSWORD
     
 };
 
