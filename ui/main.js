@@ -99,7 +99,7 @@ login_btn.onclick = function() {
             else if(request.status === 500) {
                 alert('Something went wrong');
             }
-            else if(requset.status === 403) {
+            else if(request.status === 403) {
                 alert('Username/password is invalid');
             }
             
