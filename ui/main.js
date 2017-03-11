@@ -80,3 +80,39 @@ submit.onclick = function() {
     request.send(null);
   
 };
+
+//Login button
+var login_btn = document.getElementById('login_btn');
+login_btn.onclick = function() {
+    
+    //create a reuest object
+    var request = new XMLHttpRequest();
+    
+    //capture the reponse and render the response to the user
+    request.onreadystatechange = function() {
+        if(request.readyState === XMLHttpRequest.DONE) {
+            
+            //take some action
+            if(request.status === 200) {
+                alert('Logged in successfully');
+            }
+            else if(request.status === 500) {
+                alert('Something went wrong');
+            }
+            else if(requset,status === 403) {
+                alert('Username/password is invalid');
+            }
+            
+        }
+       
+    };
+    
+    
+    //make a request to login-user endpoint
+    var username = document.getElementById('username').value;
+    var password = document.getElementById('password').value;
+    
+    request.open('POST', 'http://pacman100.imad.hasura-app.io/login-user', true);
+    request.setRequestHeader('Content-Type', 'application/json');
+    request.send(JSON.stringify({username: username, password: password}));
+};
