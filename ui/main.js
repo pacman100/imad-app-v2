@@ -16,7 +16,7 @@ img.onclick = function() {
 
 
 //counter code
-var button = document.getElementById('counter');
+/*var button = document.getElementById('counter');
 button.onclick = function(){
     
     
@@ -46,7 +46,7 @@ button.onclick = function(){
 
 //comment code
 //submit name
-/*var submit = document.getElementById('submit');
+var submit = document.getElementById('submit');
 submit.onclick = function() {
     
     //create a request object
