@@ -46,7 +46,7 @@ button.onclick = function(){
 
 //comment code
 //submit name
-var submit = document.getElementById('submit');
+/*var submit = document.getElementById('submit');
 submit.onclick = function() {
     
     //create a request object
@@ -79,7 +79,7 @@ submit.onclick = function() {
     request.open('GET', 'http://pacman100.imad.hasura-app.io/submit-name?name=' + name, true);
     request.send(null);
   
-};
+};*/
 
 //Login button
 var login_btn = document.getElementById('login_btn');
