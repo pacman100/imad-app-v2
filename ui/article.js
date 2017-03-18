@@ -100,7 +100,7 @@ function loadComments() {
                     }
                 comments.innerHTML = content;
                 }
-                else if(request.status = 404) {
+                else if(request.status === 404) {
                     comments.innerHTML = 'No comments to show';
                 }
                 else {
