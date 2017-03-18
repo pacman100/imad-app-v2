@@ -47,7 +47,15 @@ function createTemplate(data) {
 					    <h3>${heading}</h3>
 					    <div>${date.toDateString()}</div>
 					    <div>${content}</div>
-					</div>
+				    	<hr/>
+                        <h4>Comments</h4>
+                        <div id="comment_form">
+                        </div>
+                        <div id="comments">
+                            <center>Loading comments...</center>
+                        </div>
+                    </div>
+                    <script type="text/javascript" src="/ui/article.js"></script>
 				    </body>
 				</html>`;
 	return htmlTemplate;
@@ -208,7 +216,53 @@ app.get('/articles/:articleName', function (req, res) {
  });
  
 
+app.get('/get-comments/:articleName', function (req, res) {
+    
+    pool.query("SELECT comment_db.* user_db.username FROM comment_db, user_db, article_db WHERE comment.userId=user.id AND comment.articleID=article_db.id AND article_db.title=$1 ORDER BY comment.timestamp DESC", [req.params.articlename, function(err, result) {
+        if(err) {
+            res.status(500).send(err.toString());
+        }
+        else if(result.rows.length === 0) {
+            res.status(404).send('No comments found');
+        }
+        else {
+            res.send(JSON.stringify(result.rows));
+        }
+  });
+});
 
+
+app.post('/submit-comment/:articleName', function (req, res) {
+    if(req.session && req.session.auth && req.session.auth.userId) {
+       
+      pool.query("SELECT * FROM article_db WHERE title=$1",[req.params.articleName], function(err, result){
+        if(err) {
+            res.status(500).send(err.toString());
+        } 
+        else if(result.rows.length === 0) {
+              res.status(404).send("No article Found");
+        }
+        else {
+            var article_id = result.rows[0].id;
+            pool.query("INSERT INTO comment_db (userID,articleID,comment) VALUES ($1,$2,$3)",
+                [req.session.auth.userID, article_id, req.body.comment],
+                function(err, result){
+                    if(err) {
+                        res.status(500).send(err.toString());
+                    }
+                    else {
+                        res.status(200).send('Comment inserted!');
+                    }
+                }
+            });
+        }
+      });
+    }
+    else {
+       res.status(403).send('Only logged in users can comment');
+    }
+    
+});
 
 
 /*app.get('/article-two', function (req, res) {
@@ -233,6 +287,10 @@ app.get('/ui/s.jpg', function (req, res) {
 
 app.get('/ui/main.js', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'main.js'));
+});
+
+app.get('/ui/:fileName', function (req, res) {
+  res.sendFile(path.join(__dirname, 'ui', req.params.fileName));
 });
 
 
