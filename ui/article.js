@@ -42,7 +42,7 @@ function loadCommentForm() {
         var comment = document.getElementById('comment_text');
         request.open('POST', '/submit-comment/'+currentArticleTitle, true);
         request.setRequestHeader('Content-Type','application/json');
-        concole.log(comment);
+        console.log(comment);
         request.send(JSON.stringify({comment: comment}));
         submit_btn.value = 'Submitting...';
     };
