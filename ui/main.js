@@ -1,118 +1,163 @@
-/*console.log('Loaded!');
-var element = document.getElementById("main_txt");
-element.innerHTML = 'Sourab Mangrulkar';
-var para = document.getElementById("para");
-para.innerHTML = 'Painting a masterpiece on the canvas of life. :)';
-var img = document.getElementById("madi");
-
-var marginLeft = 10;
-function moveRight() {
-    marginLeft = marginLeft+10;
-    img.style.marginLeft = marginLeft + 'px';
-}
-img.onclick = function() {
-    var interval = setInterval(moveRight , 50);
-}*/
-
-
-//counter code
-/*var button = document.getElementById('counter');
-button.onclick = function(){
+function loadLoginForm() {
+    var login_reg_HTML = `
+                        <input type="text" placeholder="username" id="username"/>
+                        <br>
+                        <input type="password" placeholder="password" id="password"/>
+                        <br><br>
+                        <input type="submit" value="Login" id="login_btn"/>
+                        <input type="submit" value="Register" id="register_btn"/>
+                        `;
+                        
+    document.getElementById('login_area').innerHTML = login_reg_HTML;
     
-    
-    //create a request object
-    var request = new XMLHttpRequest();
-    
-    //Capture the response and store it in a variable
-    request.onreadystatechange = function() {
-        if(request.readyState === XMLHttpRequest.DONE) {
+    //submit username & password to login
+    var login_btn = document.getElementById('login_btn');
+    login_btn.onclick = function() {
+        
+        //create a request object
+        var request = new XMLHttpRequest();
+        
+        //catch the response and store it in a variable
+        request.onreadystatechange = function() {
             
-            //take some action 
-            if(request.status === 200) {
-                var counter = request.responseText;
-                //Render the variable in correct span
-                var span= document.getElementById('count');
-                span.innerHTML = counter.toString();
-            }
-        }
-        //not done yet
-    };
-    
-    //Make a request to counter endpoint
-    request.open('GET', 'http://pacman100.imad.hasura-app.io/counter', true);
-    request.send(null);
-};
-
-
-//comment code
-//submit name
-var submit = document.getElementById('submit');
-submit.onclick = function() {
-    
-    //create a request object
-    var request = new XMLHttpRequest();
-    
-    //Capture the response and store it in a variable
-    request.onreadystatechange = function() {
-        if(request.readyState === XMLHttpRequest.DONE) {
-            
-            //take some action 
-            if(request.status === 200) {
-                //render the names array list
-                var names = request.responseText;
-                names = JSON.parse(names);
-                var list = '';
-                for(var i=0;i<names.length;i++)
-                {
-                    list+= '<li>' + names[i] + '</li>';
+            if(request.readyState === XMLHttpRequest.DONE) {
+                //take some action 
+                if(request.status === 200) {
+                    login_btn.value = "Logged in!";
                 }
-                var ul = document.getElementById('nameslist');
-                ul.innerHTML = list;
+                else if(request.status === 403) {
+                    alert("Invalid Credentials!");
+                    login_btn.value = "Login";
+                }
+                else if(request.status === 500) {
+                    alert("Something wrong with server!");
+                    login_btn.value = "Login" ;
+                }
+                else {
+                    alert("Something wrong with server!");
+                    login_btn.value = "Login" ;
+                }
+                loadLogin();
             }
-        }
-        //not done yet
+            //request not yet processed
+        };
+     
+        //make a request
+        var username = document.getElementById('username').value;
+        var password = document.getElementById('password').value;
+        console.log(username);
+        console.log(password);
+        request.open('POST','/login-user',true);
+        request.setRequestHeader('Content-Type','application/json');
+        request.send(JSON.stringify({username: username , password: password}));
+        login_btn.value = "Loggin in...";
     };
     
-    //Make a request to counter endpoint
-    var nameInput= document.getElementById('name');
-    var name = nameInput.value;
-    request.open('GET', 'http://pacman100.imad.hasura-app.io/submit-name?name=' + name, true);
-    request.send(null);
-  
-};*/
-
-//Login button
-var login_btn = document.getElementById('login_btn');
-login_btn.onclick = function() {
+     //submit username & password to register
+    var login_btn = document.getElementById('register_btn');
+    login_btn.onclick = function() {
+        
+        //create a request object
+        var request = new XMLHttpRequest();
+        
+        //catch the response and store it in a variable
+        request.onreadystatechange = function() {
+            
+            if(request.readyState === XMLHttpRequest.DONE) {
+                //take some action 
+                if(request.status === 200) {
+                    alert("User registered successfully.");
+                    login_btn.value = "Registered!";
+                }
+                else {
+                    alert("User not registered!");
+                    login_btn.value = "Register" ;
+                }
+            }
+            //request not yet processed
+        };
+        
+        //make a request
+        var username = document.getElementById('username').value;
+        var password = document.getElementById('password').value;
+        console.log(username);
+        console.log(password);
+        request.open('POST','/create-user',true);
+        request.setRequestHeader('Content-Type','application/json');
+        request.send(JSON.stringify({username: username , password: password}));
+        login_btn.value = "Registering...";
+    };
     
-    //create a reuest object
+}
+
+function loadLoggedInUser(text) {
+    var loginArea = document.getElementById('login_area');
+    loginArea.innerHTML = `
+        <h3> <i><b>${text}<b/></i> is logged in.</h3>
+        <a href="/logout">Logout</a>
+    `;
+}
+
+function loadLogin( ) {
+    //check if user is already loggged in
+    
+    //create a request object
     var request = new XMLHttpRequest();
     
-    //capture the reponse and render the response to the user
+    //capture response and store it in variable
     request.onreadystatechange = function() {
         if(request.readyState === XMLHttpRequest.DONE) {
-            
-            //take some action
+            //take some action 
             if(request.status === 200) {
-                alert('Logged in successfully');
+                loadLoggedInUser(request.responseText);
             }
-            else if(request.status === 500) {
-                alert('Something went wrong');
+            else {
+                loadLoginForm();
             }
-            else if(request.status === 403) {
-                alert('Username/password is invalid');
-            }
-            
         }
-       
     };
     
+    //make the request
+    request.open('GET','/check-login',true);
+    request.send(null);
+}
+
+function loadArticles() {
     
-    //make a request to login-user endpoint
-    var username = document.getElementById('username').value;
-    var password = document.getElementById('password').value;
+    //create a request object
+    var request = XMLHttpRequest();
     
-    request.open('POST', 'http://pacman100.imad.hasura-app.io/login-user', true);
-    request.setRequestHeader('Content-Type', 'application/json');
-    request.send(JSON.stringify({username: username, password: password}));
-};
+    //catch response and store in variable
+    request.onreadystatechange = function() {
+        //take some action
+        if(request.readyState === XMLHttpRequest.DONE) {
+            if(request.status === 200) {
+                var content ='<ul>';
+                var articleData = JSON.parse(request.responseText);
+                for(var i=0;i<articleData.length;i++) {
+                    content+=`
+                                <li>
+                               <a href="/articles/${articleData[i].title}">${articleData[i].heading} </a>
+                               (${articleData[i].date.split('T')[0]})
+                               </li>`;
+                }
+                content+='</ul>';
+                document.getElementById('articles').innerHTML = content;
+            }
+            else {
+                 document.getElementById('articles').innerHTML = "Couldn't load article list! :(";
+            }
+        }
+         //request not processed yet
+    };
+    
+    //make the request
+    request.open('GET','/get-articles',true);
+    request.send(null);
+}
+
+//First of all check if user is already logged in 
+loadLogin();
+
+//Load the article list
+loadArticles();
