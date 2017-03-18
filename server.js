@@ -129,7 +129,7 @@ app.post('/login-user', function (req, res) {
                 //internally on the server side, it maps this session id to the object
                 //{auth: {userId}}
                 
-                res.send("Credential correct!")
+                res.send("Credential correct!");
             }
             else {
                 res.status(403).send("username/password is invalid");
@@ -228,7 +228,7 @@ app.get('/get-comments/:articleName', function (req, res) {
         else {
             res.send(JSON.stringify(result.rows));
         }
-  });
+    });
 });
 
 
@@ -253,7 +253,6 @@ app.post('/submit-comment/:articleName', function (req, res) {
                     else {
                         res.status(200).send('Comment inserted!');
                     }
-                }
             });
         }
       });
