@@ -54,8 +54,8 @@ function loadLoginForm() {
     };
     
      //submit username & password to register
-    var login_btn = document.getElementById('register_btn');
-    login_btn.onclick = function() {
+    var register_btn = document.getElementById('register_btn');
+    register_btn.onclick = function() {
         
         //create a request object
         var request = new XMLHttpRequest();
