@@ -218,7 +218,7 @@ app.get('/articles/:articleName', function (req, res) {
 
 app.get('/get-comments/:articleName', function (req, res) {
     
-    pool.query("SELECT comment_db.* user_db.username FROM comment_db, user_db, article_db WHERE comment.userId=user.id AND comment.articleID=article_db.id AND article_db.title=$1 ORDER BY comment.timestamp DESC", [req.params.articlename, function(err, result) {
+    pool.query("SELECT comment_db.* user_db.username FROM comment_db, user_db, article_db WHERE comment.userId=user_db.id AND comment.articleID=article_db.id AND article_db.title=$1 ORDER BY comment_db.timestamp DESC", [req.params.articleName], function(err, result) {
         if(err) {
             res.status(500).send(err.toString());
         }
