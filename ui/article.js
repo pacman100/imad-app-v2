@@ -91,7 +91,7 @@ function loadComments() {
                     var commentData = JSON.parse(request.responseText);
                     for(var i=0;i<commentData.length;i++) {
                         var time = new Date(commentData[i].t_stamp);
-                        content =`
+                        content +=`
                                     <div class='comment'>
                                         <p>${escapeHTML(commentData[i].comment)}</p>
                                         <div class='commenter'>
