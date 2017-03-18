@@ -85,7 +85,7 @@ function loadLoginForm() {
         request.open('POST','/create-user',true);
         request.setRequestHeader('Content-Type','application/json');
         request.send(JSON.stringify({username: username , password: password}));
-        login_btn.value = "Registering...";
+        register_btn.value = "Registering...";
     };
     
 }
