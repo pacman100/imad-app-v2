@@ -23,30 +23,6 @@ app.use(session({
     cookie: {maxAge: 1000*60*60*24*30}
 }));
 
-/*var articles = {
-	'article-one': {
-		title: 'Article-one | Sourab M',
-		heading: 'Article-one',
-		date: 'Feb 26,2017',
-		content: `
-			    <p>This is the content of the first article.This is the content of the first article.This is the content of the first article.This is the content of the first article.</p>
-		        <p>This is the content of the first article.This is the content of the first article.This is the content of the first article.This is the content of the first article.</p>
-		        <p>This is the content of the first article.This is the content of the first article.This is the content of the first article.This is the content of the first article.</p>`
-	},
-	'article-two': {
-		title: 'Article-two | Sourab M',
-		heading: 'Article-two',
-		date: 'Feb 27,2017',
-		content: `<p>This is the content of the second article.</p>`
-	},
-	'article-three': {
-		title: 'Article-three | Sourab M',
-		heading: 'Article-three',
-		date: 'Feb 28,2017',
-		content: `<p>This is the content of the third article.</p>`
-	}
-	
-};	*/
 
 function createTemplate(data) {
 	var title=data.title;
@@ -185,21 +161,21 @@ app.get('/test-db', function (req, res) {
 });
 
 
-var counter=0;
-app.get('/counter', function(req,res) {
-    counter=counter+1;
-    res.send(counter.toString());
+app.get('/get-articles', function (req, res) {
+    
+    pool.query("SELECT * FROM article_db", function(err, result) {
+        if(err) {
+            res.status(500).send(err.toString());
+        }
+        else if(result.rows.length === 0) {
+            res.status(404).send('No articles found');
+        }
+        else {
+            res.send(JSON.stringify(result.rows));
+        }
+  });
 });
 
-var names = [];
-app.get('/submit-name', function(req,res) { //  /submit-name?name=xxxx
-    //get the name from the request
-    var name = req.query.name;
-    
-    names.push(name);
-    //JSON: JavaScript ObjectNotation
-    res.send(JSON.stringify(names)); //response to the web browser
-});
 
 app.get('/articles/:articleName', function (req, res) {
   //articleName == article-one
@@ -207,7 +183,7 @@ app.get('/articles/:articleName', function (req, res) {
   /*var articleName = req.params.articleName;  
   res.send(createTemplate(articles[articleName]));*/
   
-  pool.query("SELECT * FROM article WHERE title = $1" , [req.params.articleName] , function(err,result){
+  pool.query("SELECT * FROM article_db WHERE title = $1" , [req.params.articleName] , function(err,result){
       if(err) {
           res.status(500).send(err.toString());
       }
