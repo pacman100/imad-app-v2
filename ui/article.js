@@ -25,7 +25,7 @@ function loadCommentForm() {
                 //take some action
                 if(request.status === 200){
                     //clear comment_area and load all the comments
-                     document.getElementById('comment_text').innerHTML='';
+                     document.getElementById('comment_text').value='';
                      loadComments();
                 }
                 else {
@@ -39,7 +39,7 @@ function loadCommentForm() {
         
         
         //make the request
-        var comment = document.getElementById('comment_text');
+        var comment = document.getElementById('comment_text').value;
         request.open('POST', '/submit-comment/'+currentArticleTitle, true);
         request.setRequestHeader('Content-Type','application/json');
         console.log(comment);
