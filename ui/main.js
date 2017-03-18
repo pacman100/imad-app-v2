@@ -67,11 +67,11 @@ function loadLoginForm() {
                 //take some action 
                 if(request.status === 200) {
                     alert("User registered successfully.");
-                    login_btn.value = "Registered!";
+                    register_btn.value = "Registered!";
                 }
                 else {
                     alert("User not registered!");
-                    login_btn.value = "Register" ;
+                    register_btn.value = "Register" ;
                 }
             }
             //request not yet processed
