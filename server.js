@@ -134,11 +134,19 @@ app.post('/login-user', function (req, res) {
 app.get('/check-login' , function(req,res){
     
     if(req.session && req.session.auth && req.session.auth.userId) {
-        res.send("U r logged in with id: " +  req.session.auth.userId.toString());
+       
+       pool.query("SELECT * FROM user_db WHERE id=$1", [ req.session.auth.userId], function(err, result) {
+           if(err) {
+               res.status(500).send(err.toString());
+           }
+           else {
+               res.send(JSON.stringify(result.rows[0].username));
+           }
+       });
     }
     else
     {
-        res.send("you are not logged in");
+        res.staus(400).send("you are not logged in");
     }
 });
 
