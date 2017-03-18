@@ -154,7 +154,7 @@ app.get('/check-login' , function(req,res){
     }
     else
     {
-        res.staus(400).send("you are not logged in");
+        res.status(400).send("you are not logged in");
     }
 });
 
@@ -218,7 +218,7 @@ app.get('/articles/:articleName', function (req, res) {
  app.get('/get-comments/:articleName', function (req, res) {
    // make a select request
    // return a response with the results
-   pool.query('SELECT comment_db.*, user_db.username FROM article_db, comment_db, user_db WHERE article_db.title = $1 AND article_db.id = comment_db.articleID AND comment_db.userID = user_db.id ORDER BY comment_db.t_stamp DESC', [req.params.articleName], function (err, result) {
+   pool.query('SELECT comment_db.userID,comment_db.articleID,comment_db.t_stamp,comment_db.comment, user_db.username FROM article_db, comment_db, user_db WHERE article_db.title = $1 AND article_db.id = comment_db.articleID AND comment_db.userID = user_db.id ORDER BY comment_db.t_stamp DESC', [req.params.articleName], function (err, result) {
       if (err) {
           res.status(500).send(err.toString());
       } else {
