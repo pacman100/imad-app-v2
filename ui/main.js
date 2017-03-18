@@ -50,7 +50,7 @@ function loadLoginForm() {
         request.open('POST','/login-user',true);
         request.setRequestHeader('Content-Type','application/json');
         request.send(JSON.stringify({username: username , password: password}));
-        login_btn.value = "Loggin in...";
+        login_btn.value = "Logging in...";
     };
     
      //submit username & password to register
