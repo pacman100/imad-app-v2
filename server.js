@@ -163,7 +163,7 @@ app.get('/test-db', function (req, res) {
 
 app.get('/get-articles', function (req, res) {
     
-    pool.query("SELECT * FROM article_db", function(err, result) {
+    pool.query("SELECT * FROM article_db  ORDER BY date DESC", function(err, result) {
         if(err) {
             res.status(500).send(err.toString());
         }
