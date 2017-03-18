@@ -82,6 +82,10 @@ app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
 
+app.get('/blog', function (req, res) {
+  res.sendFile(path.join(__dirname, 'ui', 'tryw3css_templates_blog.html'));
+});
+
 function hash( input, salt) {
     var hashed_string = crypto.pbkdf2Sync(input, salt, 10000, 512, 'sha512');
     return ["pbkdf2", "10000", salt, hashed_string.toString('hex')].join('$');
