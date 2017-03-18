@@ -152,7 +152,7 @@ app.get('/check-login' , function(req,res){
 
 app.get('/logout-user' , function(req,res){
     delete req.session.auth;
-    res.send("Logged out successfully!");
+    res.send("<html><body><div class='center'>Logged out successfully!</div><hr/><br><br><a href='/'>HOME</a></body></html>");
 });
 
 app.get('/test-db', function (req, res) {
