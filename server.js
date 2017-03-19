@@ -48,6 +48,11 @@ function createTemplate2(data) {
                             and is wrapped around the whole page content, except for the footer in this example -->
                             <div class="w3-content" style="max-width:1400px">
                                 <div class="w3-card-4 w3-margin w3-white">
+                                <div class="container">
+                                    <div>
+                					    <a href='/'> HOME </a>
+                					</div>
+                				    <hr/>
                                    <!-- <div class="center">
                                         <img src="ui/madi.png" alt="Nature" class="img-medium">
                                     </div>-->
@@ -67,6 +72,7 @@ function createTemplate2(data) {
                                         </div>
                                         <script type="text/javascript" src="/ui/article.js"></script>
                                     </div>
+                                </div>
                                 </div>
                             </div>
                            </body>
