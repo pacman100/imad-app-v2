@@ -23,6 +23,57 @@ app.use(session({
     cookie: {maxAge: 1000*60*60*24*30}
 }));
 
+function createTemplate2(data) {
+    var title=data.title;
+	var heading=data.heading;
+	var date=data.date;
+	var content=data.content;
+	
+	var htmlTemplate = `<html>
+                            <head>
+                                <title>${title}</title>
+                                <meta name="viewport" content="width=device-width , initial-scale=1"/>
+                                <meta charset="UTF-8">
+                                <link href="/ui/style.css" rel="stylesheet" />
+                                <link rel="stylesheet" href="https://www.w3schools.com/w3css/3/w3.css">
+                                <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+                                <style>
+                                body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+                                </style>
+                             </head>
+                            
+                            <body class="w3-light-grey">
+                        
+                            <!-- w3-content defines a container for fixed size centered content, 
+                            and is wrapped around the whole page content, except for the footer in this example -->
+                            <div class="w3-content" style="max-width:1400px">
+                                <div class="w3-card-4 w3-margin w3-white">
+                                   <!-- <div class="center">
+                                        <img src="ui/madi.png" alt="Nature" class="img-medium">
+                                    </div>-->
+                                    <div class="w3-container w3-padding-8">
+                                        <h3><b>${heading}</b></h3>
+                                        <span class="w3-opacity">${date.toDateString()}</span></h5>
+                                    </div>
+                        
+                                    <div class="w3-container">
+                                        <p>${content}</p>
+                                    	<hr/>
+                                        <h4>Comments</h4>
+                                        <div id="comment_form">
+                                        </div>
+                                        <div id="comments">
+                                            <center>Loading comments...</center>
+                                        </div>
+                                        <script type="text/javascript" src="/ui/article.js"></script>
+                                    </div>
+                                </div>
+                            </div>
+                           </body>
+                        </html>`;
+    return htmlTemplate;
+}
+
 
 function createTemplate(data) {
 	var title=data.title;
@@ -209,7 +260,7 @@ app.get('/articles/:articleName', function (req, res) {
       else
       {
           var articleData = result.rows[0];
-           res.send(createTemplate(articleData));
+           res.send(createTemplate2(articleData));
       }
   });
   
