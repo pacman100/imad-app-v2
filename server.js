@@ -124,7 +124,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/blog', function (req, res) {
-  res.sendFile(path.join(__dirname, 'ui', 'tryw3css_templates_blog.html'));
+  res.sendFile(path.join(__dirname, 'ui', 'blog.html'));
 });
 
 function hash( input, salt) {
